@@ -1,42 +1,44 @@
 #include "lists.h"
 
 /**
- * insert_node - inserts a number into a sorted singly linked list.
- * @head: list head
- * @number: number to store in the new node
- * Return: pointer to the new node
- */
+* insert_node - inserts  node in a sorted singly linked list
+* @head: head of the linked list.
+* @number: data in the new node.
+* Return: address of the new node.
+*/
+
 listint_t *insert_node(listint_t **head, int number)
 {
-        listint_t *runner;
-        listint_t *new;
+	listint_t *newNode;
+	listint_t *first;
 
-        runner = *head;
+	first = *head;
 
-        new = malloc(sizeof(listint_t));
-        if (new == NULL)
-                return (NULL);
-        new->n = number;
+	newNode = malloc(sizeof(listint_t));
+	if (newNode == NULL)
+		return (NULL);
 
-        if (*head == NULL || (*head)->n > number)
-        {
-                new->next = *head;
-                *head = new;
-                return (new);
-        }
+	newNode->n = number;
+	newNode->next = NULL;
 
-        while (runner->next != NULL)
-        {
-                if ((runner->next)->n >= number)
-                {
-                        new->next = runner->next;
-                        runner->next = new;
-                        return (new);
-                }
-                runner = runner->next;
-        }
-
-        new->next = NULL;
-        runner->next = new;
-        return (new);
+	if (*head == NULL || first->n > newNode->n)
+	{
+		newNode->next = *head;
+		*head = newNode;
+		return (newNode);
+	}
+	while (first->next != NULL)
+	{
+		if ((first->next->n > newNode->n && first->n < newNode->n)
+			|| newNode->n == first->n)
+		{
+			newNode->next = first->next;
+			first->next = newNode;
+			return (newNode);
+		}
+		first = first->next;
+	}
+	newNode->next = first->next;
+	first->next = newNode;
+	return (newNode);
 }
