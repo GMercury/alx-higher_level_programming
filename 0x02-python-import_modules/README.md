@@ -1,4 +1,4 @@
-# 0x02. Python - import & modules
+# 0x02. Python - import & modules ALX Python
 
 In this project, I am introduced to python modules.
 
