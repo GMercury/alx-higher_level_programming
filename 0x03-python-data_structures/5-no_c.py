@@ -1,6 +1,13 @@
 #!/usr/bin/python3
 
-
 def no_c(my_string):
-    copy_str = [x for x in my_string if x != 'c' or x != 'C']
-    return ("".join(copy_str))
+    """
+    Removes all characters c and C from a string
+
+    Args:
+        my_string: string
+
+    Return:
+        String
+    """
+    return "".join([c if c not in "cC" else "" for c in list(my_string)])
