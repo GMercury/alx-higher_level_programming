@@ -1,9 +1,14 @@
 #!/usr/bin/python3
 
-
 def search_replace(my_list, search, replace):
-    new_list = my_list[:]
-    for i in range(len(new_list)):
-        if new_list[i] == search:
-            new_list[i] = replace
-    return new_list
+    """
+    Replaces all occurrences of an element by another in a new list
+
+    Args:
+        my_list: list
+        search: element to replace
+        replace: element to replace with
+
+    Return: list
+    """
+    return [i if i != search else replace for i in my_list]
