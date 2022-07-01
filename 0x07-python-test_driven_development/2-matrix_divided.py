@@ -1,30 +1,57 @@
 #!/usr/bin/python3
-"""
-This is the "2-matrix_divided" module.
-The 2-matrix_divided module supplies one function, matrix_divided(matrix, div).
-"""
+""" 2-matrix_divided.py """
+
+
+def is_valid_matrix(matrix):
+    """Checks if a given matrix is a valid matrix of integers
+
+    Args:
+        matrix: matrix to be checked
+
+    Returns: True if matrix is a valid matrix. Otherwise False
+    """
+    # check that matrix is a list and it's not empty
+    if type(matrix) != list or len(matrix) == 0:
+        return False
+
+    # check that all elements of the matrix are lists of integers of same size
+    if type(matrix[0]) != list:
+        return False
+
+    row_size = len(matrix[0])
+    for row in matrix:
+        # check that the current element is a list of the correct size
+        if type(row) != list:
+            return False
+        if len(row) != row_size:
+            raise TypeError("Each row of the matrix must have the same size")
+
+        # check that the current row only contains integers/floats
+        for num in row:
+            if type(num) not in [int, float]:
+                return False
+
+    return True
 
 
 def matrix_divided(matrix, div):
-    """Divides all elements in the matrix by div"""
-    if type(matrix) is not list:
-        raise TypeError(
-            "matrix must be a matrix (list of lists) of integers/floats")
-    size = None
-    for l in matrix:
-        if type(l) is not list:
-            raise TypeError(
-                "matrix must be a matrix (list of lists) of integers/floats")
-        if size is None:
-            size = len(l)
-        elif size != len(l):
-            raise TypeError("Each row of the matrix must have the same size")
-        for i in l:
-            if type(i) is not int and type(i) is not float:
-                raise TypeError("matrix must be a matrix (list of lists) of \
-integers/floats")
-    if type(div) is not int and type(div) is not float:
+    """Divides all elements of a matrix by a given number
+
+    Args:
+        matrix: list of lists of integers or floats
+        div: number to divide matrix by
+
+    Returns: new matrix containing result
+    """
+    # check that matrix is valid
+    if not is_valid_matrix(matrix):
+        raise TypeError("matrix must be a matrix (list of lists) " +
+                        "of integers/floats")
+
+    # check that div is valid
+    if type(div) not in [int, float]:
         raise TypeError("div must be a number")
     if div == 0:
         raise ZeroDivisionError("division by zero")
-    return [[round(i / div, 2) for i in l] for l in matrix]
+
+    return [[round(n / div, 2) for n in row] for row in matrix]
