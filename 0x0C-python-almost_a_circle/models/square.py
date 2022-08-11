@@ -1,58 +1,56 @@
 #!/usr/bin/python3
-"""The square"""
-from models.base import Base
+"""Provides a class to represent a square
+"""
+
 from models.rectangle import Rectangle
 
 
 class Square(Rectangle):
-    """A square class inheriting from rectangle"""
+    """Representation of a rectangle
+    """
+    HEADERS = ('id', 'size', 'x', 'y')
 
     def __init__(self, size, x=0, y=0, id=None):
-        """Constructs the square's attributes"""
+        """Instantiate a rectangle
+        """
         super().__init__(size, size, x, y, id)
 
     def __str__(self):
-        """String method for rectangle class"""
-        str_res = ("[Square] ({}) {}/{} - {}"
-                   .format(self.id, self.x, self.y, self.width))
-        return str_res
-
-    def area(self):
-        """Returns the area of the square"""
-        return self.width ** 2
+        """Get a string representation of a square
+        """
+        return "[{type}] ({id}) {x}/{y} - {size}".format(
+            type=self.__class__.__name__,
+            id=self.id,
+            size=self.size,
+            x=self.x,
+            y=self.y
+        )
 
     @property
     def size(self):
-        """Gets the"""
+        """Get private instance attribute 'width'
+        """
         return self.width
 
     @size.setter
-    def size(self, value):
-        """Sets the size of square"""
-        self.width = value
-        self.height = value
-
-    def update(self, *args, **kwargs):
-        """Updates the public class
-        Args:
-            *args(any): the list of arguments - no-keyworded arguments
-            **kwargs(any):
+    def size(self, size):
+        """Set private instance attributes 'width' and 'height'
         """
-        if not args and not kwargs:
-            return
-        if args:
-            attributes = ["id", "size", "x", "y"]
-            for i, j in enumerate(args):
-                if i < len(attributes):
-                    setattr(self, attributes[i], j)
-        else:
-            for k, v in kwargs.items():
-                if hasattr(self, k):
-                    setattr(self, k, v)
+        self.width = size
+        self.height = size
 
     def to_dictionary(self):
-        """Converts to dictionary"""
-        _map = super().to_dictionary()
-        _map["size"] = _map["width"]
-        del _map["width"], _map["height"]
-        return _map
+        """Get a dictionary representation of a square
+        """
+        return {key: getattr(self, key) for key in self.__class__.HEADERS}
+
+    def update(self, *args, **kwargs):
+        """Update the attributes of a  object
+        """
+        if args:
+            for pair in zip(self.HEADERS, args):
+                setattr(self, *pair)
+        else:
+            for key in kwargs:
+                if key in self.HEADERS:
+                    setattr(self, key, kwargs[key])
