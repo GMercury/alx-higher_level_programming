@@ -1,1 +1,2 @@
-za
+-- lists all databases
+SHOW DATABASES;
